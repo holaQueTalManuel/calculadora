@@ -1,5 +1,6 @@
 import {useRef, useState, useEffect} from 'react';
 
+
 enum Operadores {
     sumar = '+',
     restar = '-',
@@ -9,8 +10,8 @@ enum Operadores {
 
 export const useCalculadora = () =>{
 
-    const [formula, setFormula] = useState('0');
-    const [numero, setNumero] = useState('0');
+    const [formula, setFormula] = useState('');
+    const [numero, setNumero] = useState('');
     const [numeroAnterior, setNumeroAnterior] = useState('0');
 
     const UltimaOperacion = useRef<Operadores>();
@@ -32,6 +33,8 @@ export const useCalculadora = () =>{
     },[formula]);
 
     const clean = () => {
+        
+
         setFormula('0');
         setNumero('0');
         setNumeroAnterior('0');
@@ -39,6 +42,7 @@ export const useCalculadora = () =>{
     }
 
     const cambiarSigno = () => {
+        
         if (numero.includes('-')) {
             return setNumero(numero.replace('-',''));
         } else {
@@ -71,25 +75,31 @@ export const useCalculadora = () =>{
         setNumero('0');
     }
 
-    const operacionDividir = () => {
+    const operacionRealizar = (op : Operadores) => {
         establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.dividir;
+        return UltimaOperacion.current = op;
     }
 
-    const operacionMultiplicar = () => {
-        establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.multiplicar;
-    }
+    // const operacionDividir = () => {
+    //     establecerUltimoNumero();
+    //     UltimaOperacion.current = Operadores.dividir;
+    // }
 
-    const operacionRestar = () => {
-        establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.restar;
-    }
+    // const operacionMultiplicar = () => {
+    //     establecerUltimoNumero();
+    //     UltimaOperacion.current = Operadores.multiplicar;
+    // }
 
-    const operacionSumar = () => {
-        establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.sumar;
-    }
+    // const operacionRestar = () => {
+    //     establecerUltimoNumero();
+    //     UltimaOperacion.current = Operadores.restar;
+    // }
+
+    // const operacionSumar = () => {
+    //     establecerUltimoNumero();
+    //     UltimaOperacion.current = Operadores.sumar;
+        
+    // }
 
     const calcularResultado = () => {
         const [primerValor, operacion, segundoValor] = formula.split(' ');
@@ -110,6 +120,9 @@ export const useCalculadora = () =>{
                 return num1 * num2;
 
             case Operadores.dividir:
+                if(num1 === 0 || num2 === 0){
+                    return 'No se puede dividir entre 0'
+                }
                 return num1 / num2;
 
             default:
@@ -152,16 +165,13 @@ export const useCalculadora = () =>{
 
     return {
         // Propiedades
-        formula, numero, numeroAnterior,
+        formula, numero, numeroAnterior, Operadores,
         //Metodos
         construirNumero,
         clean,
         cambiarSigno,
         borrarDigito,
-        operacionDividir,
-        operacionMultiplicar,
-        operacionRestar,
-        operacionSumar,
+        operacionRealizar,
         calcularResultado,
         resultado
     }
