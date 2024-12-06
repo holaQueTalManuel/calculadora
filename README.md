@@ -1,0 +1,1 @@
+Mi nombre es Manuel Montero Calero y para abrir la app hay que poner en la terminal "npm run start" y luego pulsar a para que se abra en el movil, ademas de que este tiene que estar conectado al ordenador.
