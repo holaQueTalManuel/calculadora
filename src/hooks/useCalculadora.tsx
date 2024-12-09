@@ -121,7 +121,7 @@ export const useCalculadora = () =>{
 
             case Operadores.dividir:
                 if(num1 === 0 || num2 === 0){
-                    return 'No se puede dividir entre 0'
+                    return 'Entre 0 NO'
                 }
                 return num1 / num2;
 
